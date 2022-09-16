@@ -1,0 +1,11 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals: 
+            image_post: "/img/post/"
+            exemple_post: "/img/standard_post/"
+            profile_image: "/img/profile/"
+            profile_standard: "/img/standard_profil/"
+            latestposts: '@App\Controller\Latestsposts\Latestsposts'
+when@test:
+    twig:
+        strict_variables: true

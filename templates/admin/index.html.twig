@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin {% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+    {% include "header.html.twig" %}
+    {% include "_layout_left.html.twig" %}
+ {% if is_granted("ROLE_ADMIN") %}
+    <div class="main_div">
+    <h1 class="text-center"> Les articles en pending !</h1>
+        {% for post in posts %}  
+            <div class="posts" id="{{ post.id }}">
+                {{ post.content }}
+                {{ post.id }}
+                <a href="{{ path('post_pending',{'id': post.id}) }}">valider le post </a>
+                {% if post.image is null %}
+                    <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="user-img-40">
+                {% else %}
+                    <img src="{{ image_post ~ post.image }}" alt="image du post" class="user-img-40">
+                {% endif %}
+            </div>
+        {% endfor %}
+   </div>
+    
+   {% include "_layout_right.html.twig" %}
+       
+{% endif %}
+
+{% endblock %}

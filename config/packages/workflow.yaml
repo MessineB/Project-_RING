@@ -1,0 +1,48 @@
+framework:
+    workflows: 
+        post_publishing:
+            type: 'state_machine'
+            audit_trail: 
+                enabled: true
+            marking_store:
+                type: 'method'
+                property: 'currentState'
+            supports: 
+                - App\Entity\Post
+            initial_marking: draft
+            places: 
+                - draft
+                - pending
+                - auto_pending
+                - admin_verification
+                - rejected
+                - published
+            transitions:
+                to_review_user:
+                    from: draft
+                    to: pending
+                rejected:
+                    from: [pending, admin_verification] 
+                    to: rejected
+                publish_user:
+                    guard: is_granted('ROLE_ADMIN')
+                    from: pending
+                    to: published 
+                publish_admin:
+                    guard: is_granted('ROLE_ADMIN')
+                    from: draft
+                    to: published
+                to_review_verified_user:
+                    from: draft
+                    to: auto_pending
+                auto_review_refused:
+                    from: auto_pending
+                    to: admin_verification
+                auto_review_accepted:
+                    from: auto_pending
+                    to: published
+                publish_verified_user:
+                    guard: is_granted('ROLE_ADMIN')
+                    from: admin_verification
+                    to: published
+                

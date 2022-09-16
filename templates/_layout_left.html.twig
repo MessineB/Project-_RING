@@ -1,0 +1,16 @@
+<div class="layout_left"> 
+{% if app.user %}
+    <h1 class="text_left">Connecté en tant que :  </h1>
+    <p> L'utilisateur est {{ app.user.name}} </p>
+        {% if app.user.image is not null %}
+        <img src="{{ profile_image ~ app.user.image }}" alt="image du post" class="user-img-40">
+        {% else %}
+        <p> Vous n'avez pas d'image </p>
+        <img src="{{ profile_standard ~ "user_blank.png" }}" alt="image du post" class="user-img-40">
+        {% endif %}
+    {% else %}
+        <h1 class="text_left">Vous pouvez participer en dessous ! </h1>
+        <p> Cliquez <a href="{{path('app_register')}}">  ici  </a> pour créer un compte !</p>
+        <p> Vous avez deja un compte ?<a href="{{path('app_login')}}">  Cliquez ici </a></p>
+    {% endif %}
+</div>
