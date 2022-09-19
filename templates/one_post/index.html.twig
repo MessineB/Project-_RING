@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post :{{postactuel.content}}{% endblock %}
+
+{% block body %}
+{% include "header.html.twig" %}
+    <div class="bigmain">
+         {% include "_layout_left.html.twig" %}
+        <div class="main_div">
+            <h1> Post actuel ! </h1>
+                <div class="posts" id="{{ postactuel.id }}">
+                    <p>{{ postactuel.content }} <p>
+                    <p> Public ciblé : {{ postactuel.public}}</p>
+                    {% if postactuel.content|length > 20 %}
+                        <p> Ce post est long </p>
+                    {% endif %}
+                    <p>id du post : {{ postactuel.id }}</p>
+                    <div class="divimage">
+                        {% if postactuel.image is null %}
+                            <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
+                            {% else %}
+                            <img src="{{ image_post ~ postactuel.image }}" alt="image du post" class="imageposts">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form_commentaire">
+                    <p> ici il y aura un formulaire pour les commentaires <p>
+                    {{ form_start(CommentType) }}
+                        {{ form_row(CommentType.content) }}
+                    {{ form_end(CommentType)}}
+                </div>
+            <div class="espace_commentaire">
+                {% for comment in comments %}
+                    <div class="comment_user">
+                        <p> {{ comment.content }} </p>
+                        <p> Created the :{{comment.created|format_datetime(locale='fr',pattern="dd MMMM YYYY kk:mm:ss")}} </p>
+                        <a href="{{path('app_profil',{'id': comment.user.id})}}">by {{comment.user.name}}  </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% include "_layout_right.html.twig" %}
+    </div>
+{% endblock %}

@@ -23,7 +23,6 @@ class HomeController extends AbstractController
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
         
-       
         //je recupere les posts a afficher sur la page d'acceuil
         $posts = $postrepo->findByStatus("published");
         if ($form->isSubmitted() && $form->isValid()) {

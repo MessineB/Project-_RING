@@ -1,10 +1,12 @@
 <div class="layout_right">
-    <h1 class="text_right">Derniers posts :</h1>
+    <h1 class="title_text_right">Derniers posts :</h1>
     <div class="last_posts">
         {% for lastpost in latestposts.Latestposts %}
+        <div class="lposts" id="{{ lastpost.id }}">
             <p>{{ lastpost.content }}</p>
             <img src="{{ image_post ~ lastpost.image }}" alt="image du post" class="user-img-40">
             <br>
+        </div>
         {% endfor %}
     </div>
 </div>

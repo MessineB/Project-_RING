@@ -25,7 +25,9 @@ class PostType extends AbstractType
                     'placeholder' => 'Public ciblé')
             ])
             ->add('content' , TextType::class, [
-                'required' => true
+                'required' => true,
+                'attr' => array(
+                    'placeholder' => 'Ecrire votre article')
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Envoyer"

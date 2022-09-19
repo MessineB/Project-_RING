@@ -1,33 +1,56 @@
 {% extends 'base.html.twig' %}
-
+ {% block javascripts %}
+    {{ encore_entry_script_tags('admin') }}
+ {% endblock %}
 {% block title %}Admin {% endblock %}
 
 {% block body %}
+
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-    {% include "header.html.twig" %}
-    {% include "_layout_left.html.twig" %}
- {% if is_granted("ROLE_ADMIN") %}
-    <div class="main_div">
-    <h1 class="text-center"> Les articles en pending !</h1>
+    {% include "header_admin.html.twig" %}
+<div id="main_div" class="main_div">
+    {% if is_granted("ROLE_ADMIN") %} 
+        <button id="switch"> SWITCH </button>
+        <h1 class="text-center adminpost"> Les articles en pending !</h1>
         {% for post in posts %}  
-            <div class="posts" id="{{ post.id }}">
-                {{ post.content }}
-                {{ post.id }}
-                <a href="{{ path('post_pending',{'id': post.id}) }}">valider le post </a>
-                {% if post.image is null %}
-                    <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="user-img-40">
-                {% else %}
-                    <img src="{{ image_post ~ post.image }}" alt="image du post" class="user-img-40">
-                {% endif %}
+            <div class="posts adminpost" id="{{ post.id }}">
+                <p class="adminpost">{{ post.content }} </p>
+                <p class="adminpost">{{ post.id }}</p>
+                <a href="{{ path('post_pending',{'id': post.id}) }}" class="adminpost">valider le post </a>
+                <div class="divimage">
+                    {% if post.image is null %}
+                        <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts adminpost">
+                    {% else %}
+                        <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts adminpost">
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
-   </div>
-    
-   {% include "_layout_right.html.twig" %}
-       
-{% endif %}
-
+        <h1 class="text-center adminuser"> Les users !</h1>
+        {% if users|length == 0 %}
+               <p> Il n'y a pas d'user a verifié ! </p>
+        {% else %}
+            {% for user in users %} 
+                <div class="posts adminuser" id="{{ user.id }}">
+                    <p class="adminuser"> {{ user.name }} </p>
+                    <p class="adminuser"> {{ user.id }} </p>
+                    {% if user.image is not null %}
+                    <img src="{{ profile_image ~ user.image }}" alt="image du post" class="imageposts">
+                    {% else %}
+                    <img src="{{ profile_standard ~ "user_blank.png" }}" alt="image du post" class="imageposts">
+                    {% endif %}
+                    <a href="{{ path('user_verified',{'id': user.id}) }}">Verify user </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% else %}
+        <div class="posts">
+            <p>Vous n'avez pas les droits d'etre sur cette page </p>
+        </div>
+    {% endif %}
+   
+    </div>
 {% endblock %}

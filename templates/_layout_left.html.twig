@@ -1,12 +1,12 @@
 <div class="layout_left"> 
 {% if app.user %}
-    <h1 class="text_left">Connecté en tant que :  </h1>
-    <p> L'utilisateur est {{ app.user.name}} </p>
+    <h1 class="profil_layout_left">Profil  </h1>
+    <a href="{{path('app_profil',{'id': app.user.id})}}">L'utilisateur est {{ app.user.name}} </p></a>
+        <p> {{app.user.email}} </p>
         {% if app.user.image is not null %}
-        <img src="{{ profile_image ~ app.user.image }}" alt="image du post" class="user-img-40">
+            <a href="{{path('app_profil',{'id': app.user.id})}}"><img src="{{ profile_image ~ app.user.image }}" alt="image du post" class="user-img-40"></a>
         {% else %}
-        <p> Vous n'avez pas d'image </p>
-        <img src="{{ profile_standard ~ "user_blank.png" }}" alt="image du post" class="user-img-40">
+            <a href="{{path('app_profil',{'id': app.user.id})}}"><img src="{{ profile_standard ~ "user_blank.png" }}" alt="image du post" class="user-img-40"></a>
         {% endif %}
     {% else %}
         <h1 class="text_left">Vous pouvez participer en dessous ! </h1>

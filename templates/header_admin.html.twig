@@ -2,16 +2,12 @@
         <div class="menu_main"> 
             <a href="{{path('app_home')}}"><i class="fa-solid fa-house fs-1"></i> </a>  
             {% if is_granted("ROLE_ADMIN") %}
-            <a href="{{path('app_admin')}}"><i class="fa-solid fa-lock fs-1"> ADMIN  ({{latestposts.PendingPosts|length + latestposts.Usertoverify|length}})</i> </a>
-            
+            <a href="{{path('app_admin')}}"><i class="fa-solid fa-lock fs-1"> Post : ({{latestposts.PendingPosts|length}})</i> </a>
+            <a href="{{path('app_admin')}}"><i class="fa-solid fa-lock fs-1"> User : ({{latestposts.Usertoverify|length}}) </i> </a>
             {% endif %}
             {% if app.user is null %}
                 <a href="{{path('app_login')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user fs-1"> LOGIN</i></a>
                 <a href="{{path('app_register')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user-plus fs-1"> REGISTER</i></a>
-            {% endif %}
-            {% if app.user %}
-                <a href="{{path('app_profil',{'id': app.user.id})}}"><i class="fas fa-id-badge fs-1"> PROFIL</i> </a>
-                <a href="{{path('app_logout')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user-minus fs-1"> LOGOUT</i></a>
             {% endif %}
         </div>
 </header>
