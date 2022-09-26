@@ -1,16 +1,19 @@
 <div class="layout_left"> 
 {% if app.user %}
     <h1 class="profil_layout_left">Profil  </h1>
-    <a href="{{path('app_profil',{'id': app.user.id})}}">L'utilisateur est {{ app.user.name}} </p></a>
-        <p> {{app.user.email}} </p>
+        <h3>Bienvenue <a href="{{path('app_profil',{'id': app.user.id})}}">{{ app.user.name}} !</h3></a>
+        
         {% if app.user.image is not null %}
             <a href="{{path('app_profil',{'id': app.user.id})}}"><img src="{{ profile_image ~ app.user.image }}" alt="image du post" class="user-img-40"></a>
         {% else %}
             <a href="{{path('app_profil',{'id': app.user.id})}}"><img src="{{ profile_standard ~ "user_blank.png" }}" alt="image du post" class="user-img-40"></a>
         {% endif %}
+        <p>Nombre de vue du profil : <strong> {{app.user.nbvue}}</strong> </p>
+        <p>Nombre de post publiée : <strong>{{app.user.posts|length}}</strong> </p>
+        <p>Nombre de commentaire publiée : <strong>{{app.user.comments|length}}</strong> </p>
     {% else %}
-        <h1 class="text_left">Vous pouvez participer en dessous ! </h1>
+        <h3 class="text_left">Vous pouvez participer en dessous ! </h3>
         <p> Cliquez <a href="{{path('app_register')}}">  ici  </a> pour créer un compte !</p>
-        <p> Vous avez deja un compte ?<a href="{{path('app_login')}}">  Cliquez ici </a></p>
+        <p> Vous avez deja un compte ? Cliquez<a href="{{path('app_login')}}"> ici </a></p>
     {% endif %}
 </div>

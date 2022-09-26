@@ -22,7 +22,6 @@ class HomeController extends AbstractController
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-        
         //je recupere les posts a afficher sur la page d'acceuil
         $posts = $postrepo->findByStatus("published");
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,8 +38,26 @@ class HomeController extends AbstractController
             } 
             // Avec cette commande j'applique la transition "to review user" qui permet a l'article de passer de "draft" a "pending" 
             $workflow = $registry->get($post, 'post_publishing');
-            $workflow->apply($post, 'to_review_user');
-
+            if ($this->isGranted('ROLE_ADMIN')) {
+                $workflow->apply($post, 'publish_admin');
+            }
+            else {
+                if ($this->isGranted('ROLE_VERIFIED_USER')) {
+                    $workflow->apply($post, 'to_review_verified_user');
+                    // Autopending pour verifier des mots pas tres sympa
+                    if (  str_contains($post->getContent(), 'merde')  )
+                    {   
+                        $workflow->apply($post, 'auto_review_refused');
+                    }
+                    $workflow->apply($post, 'auto_review_accepted');
+                }
+                else {
+                //Si ROLE est USER
+                dd($post);
+                $workflow->apply($post, 'to_review_user');
+                }
+            }
+           
             $entityManager = $doctrine->getManager();
             $entityManager->persist($post);
             $entityManager->flush();

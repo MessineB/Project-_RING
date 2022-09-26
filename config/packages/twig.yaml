@@ -5,6 +5,7 @@ twig:
             exemple_post: "/img/standard_post/"
             profile_image: "/img/profile/"
             profile_standard: "/img/standard_profil/"
+            fond_ecran: "/img/fond_ecran/"
             latestposts: '@App\Controller\Latestsposts\Latestsposts'
 when@test:
     twig:

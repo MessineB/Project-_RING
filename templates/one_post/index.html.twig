@@ -1,20 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post :{{postactuel.content}}{% endblock %}
+{% block title %}Article : {{postactuel.public}}{% endblock %}
 
 {% block body %}
 {% include "header.html.twig" %}
     <div class="bigmain">
          {% include "_layout_left.html.twig" %}
         <div class="main_div">
-            <h1> Post actuel ! </h1>
+            <h1 class="text_center_posts"> Post actuel ! </h1>
                 <div class="posts" id="{{ postactuel.id }}">
+                    <p><strong> Public ciblé : </strong> {{ postactuel.public}}</p>
                     <p>{{ postactuel.content }} <p>
-                    <p> Public ciblé : {{ postactuel.public}}</p>
-                    {% if postactuel.content|length > 20 %}
-                        <p> Ce post est long </p>
-                    {% endif %}
-                    <p>id du post : {{ postactuel.id }}</p>
                     <div class="divimage">
                         {% if postactuel.image is null %}
                             <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
@@ -23,8 +19,8 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="form_commentaire">
-                    <p> ici il y aura un formulaire pour les commentaires <p>
+                <div class="posts">
+                     <h2 class="text_center_posts"> Espace commentaire ! </h2>
                     {{ form_start(CommentType) }}
                         {{ form_row(CommentType.content) }}
                     {{ form_end(CommentType)}}
@@ -33,8 +29,9 @@
                 {% for comment in comments %}
                     <div class="comment_user">
                         <p> {{ comment.content }} </p>
-                        <p> Created the :{{comment.created|format_datetime(locale='fr',pattern="dd MMMM YYYY kk:mm:ss")}} </p>
-                        <a href="{{path('app_profil',{'id': comment.user.id})}}">by {{comment.user.name}}  </a>
+                        <div class="bigmain commentaire">
+                            <p>Ecrit le : {{comment.created|format_datetime(locale='fr',pattern="dd MMMM YYYY")}} Par : <a href="{{path('app_profil',{'id': comment.user.id})}}">{{comment.user.name}}</a></p>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

@@ -48,6 +48,7 @@ class RegistrationController extends AbstractController
                 $picture->move($this->getParameter("profile_image"), $namePicture);
                 $user->setImage($namePicture);
             } 
+            $user->setNbvue("0");
             $user->setRoles(["ROLE_USER"]);
             $entityManager->persist($user);
             $entityManager->flush();

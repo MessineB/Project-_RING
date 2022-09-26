@@ -54,7 +54,20 @@ class PostRepository extends ServiceEntityRepository
        ;
    }
 
-
+ /*
+     * @return Livre[] Returns an array of Livre objects
+     */
+    
+    public function search($value)
+    {   //SELECT * FROM post as p WHERE p.title or WHERE p.content LIKE "%xxx%" ORDER BY p.created_at
+        return $this->createQueryBuilder('p')//le paramètre p représente la table post (comme un alias dans une requête SQL)
+            ->where('p.content LIKE :val')
+            ->setParameter('val', "%$value%")
+            ->orderBy('p.created', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
    
    /**
     * @return Post[] Returns an object of Post objects
@@ -63,6 +76,21 @@ class PostRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+    * @return Post[] Returns an object of Post objects
+    */
+    public function findByFate($value): object
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.currentState = :val')
             ->setParameter('val', $value)
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(100)
@@ -86,6 +114,7 @@ class PostRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    
 
 
    

@@ -3,9 +3,13 @@
     <div class="last_posts">
         {% for lastpost in latestposts.Latestposts %}
         <div class="lposts" id="{{ lastpost.id }}">
+            <h3 class="text_center_posts">{{lastpost.user.name}}</h3>
             <p>{{ lastpost.content }}</p>
-            <img src="{{ image_post ~ lastpost.image }}" alt="image du post" class="user-img-40">
-            <br>
+            {% if lastpost.image is null %}
+                <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
+                {% else %}
+                <img src="{{ image_post ~ lastpost.image }}" alt="image du post" class="imageposts">
+            {% endif %}
         </div>
         {% endfor %}
     </div>

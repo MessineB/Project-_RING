@@ -13,13 +13,21 @@
     {% include "header_admin.html.twig" %}
 <div id="main_div" class="main_div">
     {% if is_granted("ROLE_ADMIN") %} 
-        <button id="switch"> SWITCH </button>
+        <div class="button_div">
+            <button id="articles_affiche"> Articles pending</button>
+            <button id="user_affiche"> Users to verify </button>
+            <button id="article_to_delete_affiche"> Articles to delete </button>
+        </div>
         <h1 class="text-center adminpost"> Les articles en pending !</h1>
+        {% if posts|length == 0 %}
+               <p class="adminpost"> Il n'y a pas de post a verifié ! </p>
+        {% else %}
         {% for post in posts %}  
             <div class="posts adminpost" id="{{ post.id }}">
                 <p class="adminpost">{{ post.content }} </p>
                 <p class="adminpost">{{ post.id }}</p>
                 <a href="{{ path('post_pending',{'id': post.id}) }}" class="adminpost">valider le post </a>
+                <a href="{{ path('post_refused',{'id': post.id}) }}" class="adminpost">Refuser le post </a>
                 <div class="divimage">
                     {% if post.image is null %}
                         <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts adminpost">
@@ -29,9 +37,10 @@
                 </div>
             </div>
         {% endfor %}
+        {% endif %}
         <h1 class="text-center adminuser"> Les users !</h1>
         {% if users|length == 0 %}
-               <p> Il n'y a pas d'user a verifié ! </p>
+               <p class="adminuser"> Il n'y a pas d'user a verifié ! </p>
         {% else %}
             {% for user in users %} 
                 <div class="posts adminuser" id="{{ user.id }}">
@@ -45,6 +54,25 @@
                     <a href="{{ path('user_verified',{'id': user.id}) }}">Verify user </a>
                 </div>
             {% endfor %}
+        {% endif %}
+        <h1 class="text-center adminposttodelete"> Les posts a supprimer !</h1>
+        {% if poststodelete|length == 0 %}
+               <p class="adminposttodelete"> Il n'y a pas de Post a supprimer ! </p>
+        {% else %}
+         {% for posttodelete in poststodelete %}  
+            <div class="posts adminposttodelete" id="{{ posttodelete.id }}">
+                <p class="adminposttodelete">{{ posttodelete.content }} </p>
+                <p class="adminposttodelete">{{ posttodelete.id }}</p>
+                <div class="divimage">
+                    {% if posttodelete.image is null %}
+                        <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts adminposttodelete">
+                    {% else %}
+                        <img src="{{ image_post ~ posttodelete.image }}" alt="image du post" class="imageposts adminposttodelete">
+                    {% endif %}
+                    <a href="{{ path('post_deletion',{'id': posttodelete.id}) }}">SUPPRIMER</a>
+                </div>
+            </div>
+        {% endfor %}
         {% endif %}
         {% else %}
         <div class="posts">

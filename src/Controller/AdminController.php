@@ -21,12 +21,16 @@ class AdminController extends AbstractController
     {   
         $posts = $postrepo->findByStatus("pending");
         $users = $userrepo->findByRole("ROLE_USER");
+        $poststodelete = $postrepo->findBy(["currentState" => "rejected"]);
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
             'posts' => $posts,
-            'users' => $users
+            'users' => $users,
+            'poststodelete' => $poststodelete
         ]);
     }
+
+    // Validé un post et le mettre en published 
     #[Route('/post/{id}/pending', name: 'post_pending', methods: ['GET'])]
     #[IsGranted("ROLE_ADMIN")]
     public function postpending(Request $rq,Registry $registry, ManagerRegistry $doctrine, PostRepository $postrepo ) {
@@ -40,6 +44,34 @@ class AdminController extends AbstractController
         //dd($posttovalidate);
         return $this->redirectToRoute('app_admin');
     }
+    //Refuser un post et le mettre en attente de suppression
+    #[Route('/post/{id}/refused', name: 'post_refused', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN")]
+    public function postrefused(Request $rq,Registry $registry, ManagerRegistry $doctrine, PostRepository $postrepo ) {
+        $id = $rq->get("id");
+        $postrefused = $postrepo->findById($id);
+        $workflow = $registry->get($postrefused, 'post_publishing');
+        $workflow->apply($postrefused, 'rejected');
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($postrefused);
+        $entityManager->flush();
+        //dd($posttovalidate);
+        return $this->redirectToRoute('app_admin');
+    }
+    //Supprimer un post 
+    #[Route('/post/{id}/deletion', name: 'post_deletion', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN")]
+    public function postdeletion(Request $rq,Registry $registry, ManagerRegistry $doctrine, PostRepository $postrepo ) {
+        $id = $rq->get("id");
+        $posttodelete = $postrepo->findById($id);
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($posttodelete);
+        $entityManager->flush();
+        //dd($posttovalidate);
+        return $this->redirectToRoute('app_admin');
+    }
+
+    //Passé d'un utilisateur standart a un utilisateur verifié avec des droits supplementaire
     #[Route('/user/{id}/verify', name: 'user_verified', methods: ['GET'])]
     #[IsGranted("ROLE_ADMIN")]
     public function userverify(UserRepository $userrepo ,Request $rq, ManagerRegistry $doctrine ) {
@@ -52,4 +84,5 @@ class AdminController extends AbstractController
         //dd($usertovalidate);
         return $this->redirectToRoute('app_admin');
     }
+     
 }

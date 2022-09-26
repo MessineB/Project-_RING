@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PostType extends AbstractType
 {
@@ -24,7 +25,7 @@ class PostType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Public ciblé')
             ])
-            ->add('content' , TextType::class, [
+            ->add('content' , TextareaType::class, [
                 'required' => true,
                 'attr' => array(
                     'placeholder' => 'Ecrire votre article')

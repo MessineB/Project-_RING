@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page recherché {% endblock %}
+
+{% block body %}
+    {% include "header.html.twig" %}
+    
+    <div class="bigmain"> 
+	    {% include "_layout_left.html.twig" %}
+        <div class="main_div">
+            <h2 class="text-center"> Voici les posts que vous avez cherché :</h2>     
+            {# {% if app.user %}
+            <div class="formpost">
+                <h3 class="text-center"> Vous voulez vous exprimez ?</h3>
+                {{ form_start(PostType) }}
+                    {{ form_row(PostType.image) }}
+                    {{ form_row(PostType.public) }}
+                    {{ form_row(PostType.content) }}
+                    {{ form_row(PostType.submit) }}
+                {{ form_end(PostType) }}
+            </div>
+            {% endif %} #}
+            {% for post in posts %}  
+            <div class="posts" id="{{ post.id }}">
+                <h3 class="text_center_posts"><a href="{{path('app_profil',{'id': post.user.id})}}">{{post.user.name}}</a></h3>
+                <div class="post_contenu">
+                <div class="divimage">
+                    <p> Public ciblé : {{ post.public}}</p>
+                    {% if post.image is null %}
+                        <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
+                    {% else %}
+                        <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts">
+                    {% endif %}
+                </div>
+                <div class="divtexte">
+                    <div class="text">
+                        {% if post.content|length > 20 %}
+                            {# <p> Ce post est long </p> #}
+                        {% endif %}
+                        <p>{{ post.content }} </p>
+                    </div>
+                <div class="linktopost">
+                    <a class="link_post" href="{{path('app_onepost',{'id': post.id})}}">Lire la suite</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div> 
+{% include "_layout_right.html.twig" %}
+</div>
+{% endblock %}

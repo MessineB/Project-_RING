@@ -16,9 +16,7 @@ class Latestsposts {
      }
 
     public function Latestposts() {
-        
         $posts = $this->postrepo->findByStatus("published");
-        
         // dd($posts);
         return $posts;
     }

@@ -4,45 +4,46 @@
 
 {% block body %}
     {% include "header.html.twig" %}
+    
     <div class="bigmain"> 
-	{% include "_layout_left.html.twig" %}
-     {# {% if workflow_can (postType, 'rejected') %}
-    <p> Vous pouvez voir ce message car le workflow peut passé par la transition 'rejected' </p>
-    {%  endif %} #}
-     {# {% if workflow_has_marked_place (postType, 'pending') %}
-    <p> Vous pouvez voir ce message car le workflow est en mode "pending" </p>
-    {%  endif %}  #}
-    <div class="main_div">      
-     {% if app.user %}
-    <div class="formpost">
-    <h3 class="text-center"> Vous voulez vous exprimez ? Allez y ! </h3>
-     {{ form_start(PostType) }}
-        {{ form_row(PostType.image) }}
-        {{ form_row(PostType.public) }}
-        {{ form_row(PostType.content) }}
-        {{ form_row(PostType.submit) }}
-    {{ form_end(PostType) }}
+	    {% include "_layout_left.html.twig" %}
+        <div class="main_div">      
+            {% if app.user %}
+            <div class="formpost">
+                <h3 class="text-center"> Vous voulez vous exprimez ?</h3>
+                {{ form_start(PostType) }}
+                    {{ form_row(PostType.image) }}
+                    {{ form_row(PostType.public) }}
+                    {{ form_row(PostType.content) }}
+                    {{ form_row(PostType.submit) }}
+                {{ form_end(PostType) }}
+            </div>
+            {% endif %}
+            {% for post in posts %}  
+            <div class="posts" id="{{ post.id }}">
+                <h3 class="text_center_posts"><a href="{{path('app_profil',{'id': post.user.id})}}">{{post.user.name}}</a></h3>
+                <div class="post_contenu">
+                <div class="divimage">
+                    <p> Public ciblé : <strong>{{ post.public}} </strong></p>
+                    {% if post.image is null %}
+                        <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
+                    {% else %}
+                        <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts">
+                    {% endif %}
+                </div>
+                <div class="divtexte">
+                    <div class="text">
+                            {% set test = post.content|split('', 150) %}
+                            <p> {{test[0]}}... </p>
+                    </div>
+                <div class="linktopost">
+                    <a class="link_post" href="{{path('app_onepost',{'id': post.id})}}">Lire la suite</a>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
-{% for post in posts %}  
-<div class="posts" id="{{ post.id }}">
-    <p>{{ post.content }} <p>
-    <p> Public ciblé : {{ post.public}}</p>
-    {% if post.content|length > 20 %}
-        <p> Ce post est long </p>
-    {% endif %}
-    <p>id du post : {{ post.id }}</p>
-    <div class="divimage">
-        {% if post.image is null %}
-            <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
-            {% else %}
-            <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts">
-        {% endif %}
-        <a href="{{path('app_onepost',{'id': post.id})}}">Lire la suite</a>
-    </div>
-</div>
-{% endfor %}
-</div> 
+    {% endfor %}
+    </div> 
 {% include "_layout_right.html.twig" %}
 </div>
 {% endblock %}
