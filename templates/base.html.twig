@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-layout-mode="dark">
+<html>
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -18,6 +18,50 @@
         <video  class="autoplay" autoplay muted loop id="myVideo">
             <source src="{{fond_ecran ~ "video_ecran.webm"}}" type="video/mp4">
         </video>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible alert_validator" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermé"></button>
+                    <div class="alert-message alert_validator">
+                        {{ message|raw }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <!-- Modal -->
+       <div class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Bienvenue sur notre site <strong>Findaway</strong></h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img class="image_modal" src="{{fond_ecran ~ "inclusion_numerique1.jpg"}}">
+                        <p>Vous trouverez sur ce site des articles de differents utilisateurs qui parlent de leur experiences, de leur methode dans l'inclusion numerique </p>
+                        <br>
+                        <p>Vous pouvez consultez librement les publications des autres utilisateurs, si vous voulez créer un compte cliquez <a href="{{path('app_register')}}">ici</a> ( Si vous avez un compte cliquez <a href="{{path('app_login')}}">ici</a>)</p>
+                    </div>
+                    <hr>
+                    <div class="modal-body">
+                        <ul><h4 class="modal-title">Conditions d'utilisation </h4> </ul> 
+                            <li>Vous devez etre coordial avec les autres utilisateurs </li> 
+                            <li>Les publications que vous faites doivent rester dans le theme de <strong>l'inclusion numerique </strong></li>
+                            <li>Aucune insultes, agressions, menaces etc... Ne sera toléré sur ce site.</li>
+                    </div>
+                    <div class="modal-body">
+                        <p> En cliquant sur "Continuer" vous accepté de suivre les regles </p>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="https://www.larousse.fr/dictionnaires/francais/cordialit%C3%A9/19266">
+                            <button type="submit" value="refus" class="btn btn-secondary">Refus</button>
+                        </form>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Continuer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% block body %}
         {% endblock %}
     </body>

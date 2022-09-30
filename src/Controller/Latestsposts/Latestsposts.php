@@ -16,8 +16,7 @@ class Latestsposts {
      }
 
     public function Latestposts() {
-        $posts = $this->postrepo->findByStatus("published");
-        // dd($posts);
+        $posts = $this->postrepo->findByStatusandComments("published");
         return $posts;
     }
     public function PendingPosts() {

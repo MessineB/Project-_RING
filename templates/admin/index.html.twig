@@ -2,7 +2,7 @@
  {% block javascripts %}
     {{ encore_entry_script_tags('admin') }}
  {% endblock %}
-{% block title %}Admin {% endblock %}
+{% block title %}Admin |Findaway{% endblock %}
 
 {% block body %}
 
@@ -18,7 +18,7 @@
             <button id="user_affiche"> Users to verify </button>
             <button id="article_to_delete_affiche"> Articles to delete </button>
         </div>
-        <h1 class="text-center adminpost"> Les articles en pending !</h1>
+        <h1 class="texttocenter adminpost"> Les articles en pending !</h1>
         {% if posts|length == 0 %}
                <p class="adminpost"> Il n'y a pas de post a verifié ! </p>
         {% else %}
@@ -38,7 +38,7 @@
             </div>
         {% endfor %}
         {% endif %}
-        <h1 class="text-center adminuser"> Les users !</h1>
+        <h1 class="texttocenter adminuser"> Les users !</h1>
         {% if users|length == 0 %}
                <p class="adminuser"> Il n'y a pas d'user a verifié ! </p>
         {% else %}

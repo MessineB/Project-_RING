@@ -161,6 +161,16 @@ button:hover {
     text-align: center;
     z-index: 1;
 }
+// Class pour gestion de la modal 
+.image_modal {
+    padding-left: 15%;
+    width: 90%;
+    padding-bottom: 5%;
+}
+.modal-title {
+    margin-left: 18%;
+}
+//
 .formpost {
     border-radius: 25px;
     background-color: white;
@@ -199,8 +209,14 @@ button:hover {
     transform:scale(1.05s);
     
 }
+.alert_validator {
+    width: 50%;
+    margin-left: 25%;
+    border-radius: 25px;
+}
 .profil_layout_left {
-    background-color: #DE776F;
+    background: rgb(180,92,58);
+    background: linear-gradient(90deg, rgba(180,92,58,1) 9%, rgba(253,76,29,1) 61%, rgba(252,176,69,1) 100%);
     color:white;
     border-radius: 25px;
 }
@@ -235,14 +251,15 @@ button:hover {
     text-align: center;
     padding-bottom: 5%;
 }
-.text-center {
+.texttocenter {
     text-align: center;
     padding-bottom: 5%;
-    background-color: #3746aa;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgb(56, 54, 90) 0%, rgb(9, 27, 121) 33%, rgb(20, 0, 255) 100%);
     border-radius: 20px;
     color: white;
 }
-.text-center:hover {
+.texttocenter:hover {
     background-color: #21295E;
 }
 
@@ -291,7 +308,8 @@ button:hover {
   .text_center_posts {
     text-align: center;
     padding-bottom: 5%;
-    background-color: #d433af;
+    background: rgb(123,119,196);
+    background: linear-gradient(90deg, rgba(123,119,196,1) 0%, rgba(206,19,240,1) 12%, rgba(212,51,175,1) 100%); 
     border-radius: 20px;
     color: white;
     -webkit-transition: all 1s ease; /* Safari et Chrome */

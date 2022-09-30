@@ -68,7 +68,7 @@ class RegistrationController extends AbstractController
             //     $authenticator,
             //     $request
             // );
-
+            $this->addFlash('success','Votre compte a eté crée avec succes vous pouvez vous identifier !');
             return $this->redirectToRoute('app_login');
         }
 

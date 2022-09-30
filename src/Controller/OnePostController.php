@@ -42,6 +42,7 @@ class OnePostController extends AbstractController
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($comment);
                 $entityManager->flush();
+                $this->addFlash('success','Votre commentaire a eté crée avec succes !');
                 return $this->render('one_post/index.html.twig', ['postactuel' => $postsactuel , 'CommentType' => $form->createView() , 'comments' => $commentsactuel] );
             }
         return $this->render('one_post/index.html.twig', [

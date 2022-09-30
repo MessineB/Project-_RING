@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil de {{ thisuser.name}} {% endblock %}
+{% block title %}Profil de {{ thisuser.name}} |Findaway{% endblock %}
 
 {% block body %}
     {% include "header.html.twig" %}
@@ -64,4 +64,5 @@
         </div> 
     {% include "_layout_right.html.twig" %}
     </div>
+    {% include "footer.html.twig" %}
 {% endblock %}

@@ -54,6 +54,25 @@ class PostRepository extends ServiceEntityRepository
        ;
    }
 
+      /**
+    * @return Post[] Returns an array of Post objects
+    */
+    public function findByStatusandComments($value): array
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('COUNT(c) as HIDDEN nbComment')
+            ->leftJoin('p.comments', 'c')
+            ->andWhere('p.currentState = :val')
+            ->setParameter('val', $value)
+            ->orderBy('nbComment', 'DESC')
+            ->groupBy('p.id')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+ 
+
  /*
      * @return Livre[] Returns an array of Livre objects
      */

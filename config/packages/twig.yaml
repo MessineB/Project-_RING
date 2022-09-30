@@ -1,6 +1,7 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
     globals: 
+            logo_site: "/img/logo_site/"
             image_post: "/img/post/"
             exemple_post: "/img/standard_post/"
             profile_image: "/img/profile/"

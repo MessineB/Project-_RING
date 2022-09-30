@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Acceuil{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('home') }}
+ {% endblock %}
+{% block title %}Findaway{% endblock %}
 
 {% block body %}
     {% include "header.html.twig" %}
@@ -10,7 +12,7 @@
         <div class="main_div">      
             {% if app.user %}
             <div class="formpost">
-                <h3 class="text-center"> Vous voulez vous exprimez ?</h3>
+                <h3 class="texttocenter"> Vous voulez vous exprimez ?</h3>
                 {{ form_start(PostType) }}
                     {{ form_row(PostType.image) }}
                     {{ form_row(PostType.public) }}
@@ -28,6 +30,7 @@
                     {% if post.image is null %}
                         <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
                     {% else %}
+                        <a href="{{ image_post ~ post.image }}"> image </a>   
                         <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts">
                     {% endif %}
                 </div>
@@ -46,4 +49,5 @@
     </div> 
 {% include "_layout_right.html.twig" %}
 </div>
+ {% include "footer.html.twig" %}
 {% endblock %}

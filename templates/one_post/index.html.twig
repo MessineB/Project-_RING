@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article : {{postactuel.public}}{% endblock %}
+{% block title %}Article : {{postactuel.public}} |Findaway{% endblock %}
 
 {% block body %}
 {% include "header.html.twig" %}
@@ -10,7 +10,9 @@
             <h1 class="text_center_posts"> Post actuel ! </h1>
                 <div class="posts" id="{{ postactuel.id }}">
                     <p><strong> Public ciblé : </strong> {{ postactuel.public}}</p>
-                    <p>{{ postactuel.content }} <p>
+                    <div class="text">
+                        <p> {{postactuel.content}} </p>
+                    </div>
                     <div class="divimage">
                         {% if postactuel.image is null %}
                             <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
@@ -38,4 +40,5 @@
         </div>
         {% include "_layout_right.html.twig" %}
     </div>
+    {% include "footer.html.twig" %}
 {% endblock %}

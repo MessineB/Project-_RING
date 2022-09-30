@@ -40,27 +40,39 @@ class HomeController extends AbstractController
             $workflow = $registry->get($post, 'post_publishing');
             if ($this->isGranted('ROLE_ADMIN')) {
                 $workflow->apply($post, 'publish_admin');
+                $this->addFlash('success', 'Votre Article a été créé avec succès !');
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($post);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_home');
             }
             else {
                 if ($this->isGranted('ROLE_VERIFIED_USER')) {
                     $workflow->apply($post, 'to_review_verified_user');
+                    
                     // Autopending pour verifier des mots pas tres sympa
                     if (  str_contains($post->getContent(), 'merde')  )
                     {   
                         $workflow->apply($post, 'auto_review_refused');
                     }
                     $workflow->apply($post, 'auto_review_accepted');
+                    $this->addFlash('success', 'Votre Article a été créé avec succès !');
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($post);
+                    $entityManager->flush();
+                    return $this->redirectToRoute('app_home');
                 }
                 else {
                 //Si ROLE est USER
-                dd($post);
                 $workflow->apply($post, 'to_review_user');
+                $this->addFlash('success', 'Votre Article a été créé avec succès ! Veuillez patienter Un admin va le valider puis le publier !');
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($post);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_home');
                 }
             }
            
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
             //$this->addFlash('success', 'Votre post a été créé avec succès !');
     } 
     //dd($posts);
