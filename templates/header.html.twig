@@ -1,4 +1,6 @@
+  
 <header>
+        
         <div class="menu_main"> 
             <a class="menu_link" href="{{path('app_home')}}"><i class="fa-solid fa-house fs-1"></i> </a>  
             {% if is_granted("ROLE_ADMIN") %}
@@ -21,5 +23,11 @@
              <form action="{{path('app_search')}}">
                 <input class="search-form" type="text" name="search" id="" placeholder="Search">
             </form>
+        </div>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('header') }}
+        {% endblock %}
+      <div class="night">
+         <button id="btnnight"><i name="imagebtn" class="fa-solid fa-moon"></i> </button>
         </div>
 </header>

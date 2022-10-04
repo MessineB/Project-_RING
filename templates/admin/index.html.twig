@@ -20,7 +20,9 @@
         </div>
         <h1 class="texttocenter adminpost"> Les articles en pending !</h1>
         {% if posts|length == 0 %}
+            <div class="posts adminpost">
                <p class="adminpost"> Il n'y a pas de post a verifié ! </p>
+            </div>
         {% else %}
         {% for post in posts %}  
             <div class="posts adminpost" id="{{ post.id }}">
@@ -40,7 +42,9 @@
         {% endif %}
         <h1 class="texttocenter adminuser"> Les users !</h1>
         {% if users|length == 0 %}
+            <div class="posts adminuser">
                <p class="adminuser"> Il n'y a pas d'user a verifié ! </p>
+            </div>
         {% else %}
             {% for user in users %} 
                 <div class="posts adminuser" id="{{ user.id }}">
@@ -55,9 +59,11 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <h1 class="text-center adminposttodelete"> Les posts a supprimer !</h1>
+        <h1 class="texttocenter adminposttodelete"> Les posts a supprimer !</h1>
         {% if poststodelete|length == 0 %}
+            <div class="posts adminposttodelete">
                <p class="adminposttodelete"> Il n'y a pas de Post a supprimer ! </p>
+            </div>
         {% else %}
          {% for posttodelete in poststodelete %}  
             <div class="posts adminposttodelete" id="{{ posttodelete.id }}">

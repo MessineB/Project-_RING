@@ -66,7 +66,7 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->orderBy('nbComment', 'DESC')
             ->groupBy('p.id')
-            ->setMaxResults(5)
+            ->setMaxResults(2)
             ->getQuery()
             ->getResult()
         ;
