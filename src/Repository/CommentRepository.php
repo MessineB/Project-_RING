@@ -45,14 +45,16 @@ class CommentRepository extends ServiceEntityRepository
    public function findByPostId($value): array
    {
        return $this->createQueryBuilder('c')
-           ->andWhere('c.post = :val')
-           ->setParameter('val', $value)
-           ->orderBy('c.created', 'DESC')
-           ->setMaxResults(100)
-           ->getQuery()
-           ->getResult()
+            ->Where("c.status = 'upload'")
+            ->andWhere('c.post = :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.created', 'DESC')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult()
        ;
    }
+
 
 //    public function findOneBySomeField($value): ?Comment
 //    {

@@ -19,6 +19,7 @@ class AdminController extends AbstractController
     #[IsGranted("ROLE_ADMIN")]
     public function index(Request $request, ManagerRegistry $doctrine ,UserRepository $userrepo , PostRepository $postrepo, Registry $registry): Response
     {   
+        // Je recupere dans l'ordre des posts en pending, des utilisateurs qui peuvent etre promus et des posts qui attendent d'etre supprimés.
         $posts = $postrepo->findByStatus("pending");
         $users = $userrepo->findByRole("ROLE_USER");
         $poststodelete = $postrepo->findBy(["currentState" => "rejected"]);

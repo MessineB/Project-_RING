@@ -1,6 +1,3 @@
-
-
-
 const BoutonArticle = document.getElementById('articles_affiche') 
 const BountonUSer = document.getElementById('user_affiche') 
 const BoutonArticleDelete = document.getElementById('article_to_delete_affiche') 

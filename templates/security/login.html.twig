@@ -7,38 +7,61 @@
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            Vous etes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <a href="{{path('app_home')}}"class="link-danger"><i class="fa-sharp fa-solid fa-house fs-1"></i></a> 
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+      {% if app.user %}
+        <div class="mb-3 text-black">
+            <p>Vous etes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se deconnecter</a></p> 
+        <p>Revenir sur le <a href="{{ path('app_home') }}">site</a></p>
+        </div> 
     {% endif %}
+        <form>
+            <!-- Name input -->
+            <div class="form-outline mb-4">
+                <label  class="form-label text-black" for="inputName">Nom</label>
+                <input type="text" placeholder="Entrer votre nom" value="{{ last_username }}" name="name" id="inputName" class="form-control form-control-lg" autocomplete="username" required autofocus>
+            </div>
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <label class="form-label text-black" for="form3Example3">Adresse mail</label>
+            <input type="email" id="form3Example3" name="email" id="inputEmail" class="form-control form-control-lg"
+              placeholder="Entrer une adresse email valide" autocomplete="email" required autofocus />
+          </div>
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <label class="form-label text-black" for="form3Example4">Password</label>
+            <input  type="password" name="password" id="inputPassword" autocomplete="current-password" required class="form-control form-control-lg"
+              placeholder="Entrer votre mot de passe" />
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+          </div>
 
-    <h1 class="h3 mb-3 font-weight-normal">Identifiez vous s'il vous plait</h1>
-    <label for="inputName">Nom</label>
-    <input type="text" value="{{ last_username }}" name="name" id="inputName" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputEmail">Email</label>
-    <input type="email" name="email" id="inputEmail" class="form-control my-2" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Checkbox -->
+            <div class="form-check mb-0">
+              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+              <label class="form-check-label text-black" for="form2Example3">
+                Se souvenir de moi
+              </label>
+            </div>
+          </div>
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Se connecter</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0 text-black">Vous n'avez pas de compte ? <a href="{{path('app_register')}}"
+                class="link-danger">S'inscrire</a></p>      
+          </div>
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        S'inscrire
-    </button>
-</form>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
  {% include "footer.html.twig" %}
 {% endblock %}

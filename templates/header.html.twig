@@ -1,33 +1,29 @@
-  
 <header>
-        
-        <div class="menu_main"> 
-            <a class="menu_link" href="{{path('app_home')}}"><i class="fa-solid fa-house fs-1"></i> </a>  
-            {% if is_granted("ROLE_ADMIN") %}
-            <ul id="menu-accordeon">
-            <li><a href="{{path('app_admin')}}">Admin ({{latestposts.PendingPosts|length}})</a>
-                <ul>
-                    <li><a href="{{path('app_admin')}}">Post in pending ({{(latestposts.PendingPosts|length)}})</a></li>
-                </ul>
-            </li>
-            </ul>
-            {% endif %}
-            {% if app.user is null %}
-                <a class="menu_link" href="{{path('app_login')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user fs-1"> LOGIN</i></a>
-                <a class="menu_link" href="{{path('app_register')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user-plus fs-1"> REGISTER</i></a>
-            {% endif %}
-            {% if app.user %}
-                <a class="menu_link" href="{{path('app_profil',{'id': app.user.id})}}"><i class="fa-solid fa-user fs-1"></i> </a>
-                <a class="menu_link" href="{{path('app_logout')}}" class="linkLogout"><i class="fa fa-sign-out fs-1"></i></a>
-            {% endif %}
-             <form action="{{path('app_search')}}">
-                <input class="search-form" type="text" name="search" id="" placeholder="Search">
-            </form>
+        <div class="menu_main">
+            <div class="sub_menu">
+                <a class="menu_link" href="{{path('app_home')}}"><i class="fa-solid fa-house fs-1"></i> </a>  
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a class="menu_link" href="{{path('app_admin')}}"><i class="fa-solid fa-lock fs-1"></i>({{latestposts.PendingPosts|length}})</a>
+                {% endif %}
+                {% if app.user is null %}
+                    <a class="menu_link" href="{{path('app_login')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user fs-1"> </i> Login</a>
+                    <a class="menu_link" href="{{path('app_register')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user-plus fs-1"> </i> Register</a>
+                {% endif %}
+                {% if app.user %}
+                    <a class="menu_link" href="{{path('app_profil',{'id': app.user.id})}}"><i class="fa-regular fa-address-card fs-1"></i> </a>
+                    <a class="menu_link" href="{{path('app_logout')}}" class="linkLogout"><i class="fa fa-sign-out fs-1"></i></a>
+                {% endif %}
+            </div>
+            <div>
+                <form action="{{path('app_search')}}">
+                    <input class="search-form" type="text" name="search" id="" placeholder="Search">
+                </form>
+            </div>
         </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('header') }}
         {% endblock %}
-      <div class="night">
+      <div class="night menu_link">
          <button id="btnnight"><i name="imagebtn" class="fa-solid fa-moon"></i> </button>
         </div>
 </header>

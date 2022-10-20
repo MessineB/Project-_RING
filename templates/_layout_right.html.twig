@@ -3,13 +3,15 @@
     <div class="last_posts">
         {% for lastpost in latestposts.Latestposts %}
         <div class="lposts" id="{{ lastpost.id }}">
-            <h3 class="text_center_posts">{{lastpost.user.name}}</h3>
+            <h3 class="text_center_posts"><a href="{{path('app_profil',{'id': lastpost.user.id})}}">{{lastpost.user.name}}</a></h3>
             <p>{{ lastpost.content }}</p>
-            {% if lastpost.image is null %}
-                <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
-                {% else %}
-                <img src="{{ image_post ~ lastpost.image }}" alt="image du post" class="imageposts">
-            {% endif %}
+            <a href="{{path('app_onepost',{'id': lastpost.id})}}">
+                {% if lastpost.image is null %}
+                    <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
+                    {% else %}
+                    <img src="{{ image_post ~ lastpost.image }}" alt="image du post" class="imageposts">
+                {% endif %}
+            </a>
         </div>
         {% endfor %}
     </div>

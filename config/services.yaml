@@ -7,6 +7,9 @@ parameters:
     image_post: '%kernel.project_dir%/public/img/post/'
     profile_image: '%kernel.project_dir%/public/img/profile/'
 services:
+    # my_service:
+    #     class:  My\Bundle\Service\MyService
+    #     arguments: [%my_param1%, %my_param2%]
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

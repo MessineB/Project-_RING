@@ -14,9 +14,9 @@
         {% endblock %}
     </head>
     <body>
-        <video  class="autoplay" autoplay muted loop id="myVideo">
+        {# <video  class="autoplay" autoplay muted loop id="myVideo">
             <source src="{{fond_ecran ~ "video_ecran.webm"}}" type="video/mp4">
-        </video>
+        </video> #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ label }} alert-dismissible alert_validator" role="alert">

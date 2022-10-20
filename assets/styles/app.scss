@@ -1,15 +1,21 @@
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
 @import "~bootstrap/scss/bootstrap";
 
+   
 header {
     position: sticky;
     top: 0;
     z-index: 2;
     display: flex;
 }
+.sub_menu {
+    display: flex;
+    width: 53%;
+    justify-content: space-between;
+}
 a {
     text-decoration: none;
-    color: #591f8d;
+    color: #3803f7;
 }
 .bigmain {
     display: flex;
@@ -26,7 +32,15 @@ a {
     -o-transition: all 1s ease; /* Opera */
     transition: all 1s ease;
 }
-
+#article_affiche {
+    background-color: #0c3c5c;
+}
+#user_affiche {
+    background-color: #1d9bf0;
+}
+#article_to_delete_affiche {
+    background-color: #1d9bf0;
+}
 .lposts:hover {
     -webkit-transform:scale(1.05); /* Safari et Chrome */
     -moz-transform:scale(1.05); /* Firefox */
@@ -43,20 +57,46 @@ a {
     right: 0px;
     top: 0;
 }
+.admin_main_div{
+    width: 60%;
+    margin-left: 30%;
+    text-align: center;
+    z-index: 1;
+}
 .adminposttodelete {
     display: none;
+    box-shadow: 12px 12px 2px 1px rgba(59, 59, 61, 0.2);
+    
+}
+.adminpost {
+    box-shadow: 12px 12px 2px 1px rgba(59, 59, 61, 0.2);
 }
 .adminuser {
     display:none;
+    background-color: white;
+    box-shadow: 12px 12px 2px 1px rgba(59, 59, 61, 0.2);
+    border-radius: 25px;
+    -webkit-transition: all 1s ease; /* Safari et Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* Internet Explorer 9 */
+    -o-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
+.adminpostimage {
+    width: 100px;
+    border-radius: 25px;
+    margin: 5% 5%;
+    object-fit: cover;
 }
 body {
-    background-image: url(https://ahp.li/6e7e67f216648703ba57.mp4);
+    background-image: url(https://images.pexels.com/photos/628241/pexels-photo-628241.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
     background-attachment: local, scroll;
     margin: 0;
-    padding-top:50px;
     font-family: 'Roboto';
 }
-
+// #footer {
+//     margin-top: 22%;
+// }
 
 .zoom {
     width: 320px;
@@ -68,10 +108,10 @@ body {
 }
 
 .imageposts { 
-    height: 150px;
-    width: 250px;
+    width: 290px;
     border-radius: 25px;
     margin: 5% 5%;
+    object-fit: cover;
 }
 
 
@@ -117,21 +157,34 @@ body {
 }
 
 .layout_right {
-    position: absolute;
     width: 29%;
     right: 20px;
     text-align: center;
     border-radius: 25px;
 }
-.divimage {
-    margin: 0px 50px 50px;
+.profil_hidden {
+    display: none;
+    -webkit-transform:scale(1.05); /* Safari et Chrome */
+    -moz-transform:scale(1.05); /* Firefox */
+    -ms-transform:scale(1.05); /* Internet Explorer 9 */
+    -o-transform:scale(1.05); /* Opera */
+    transform:scale(1.05);
 }
+.profil_visible {
+    display: inline;
+    
+}
+
 .divtexte {
     display: grid;
     width: 175px;
 }
+input {
+    border-radius: 10px;
+    border: solid 3px #16181c;
+}
 button {
-    background-color: #1d9bf0;
+    background-color: #0c3c5c;
     color: white;
     margin-bottom: 5%;
     -webkit-transition: all 1s ease; /* Safari et Chrome */
@@ -197,6 +250,9 @@ button:hover {
     -ms-transform:scale(1.05); /* Internet Explorer 9 */
     -o-transform:scale(1.05); /* Opera */
     transform:scale(1.05s);
+}
+#btnnight {
+    border-radius: 25px;
 }
 .posts {
     background-color: white;
@@ -349,7 +405,55 @@ button:hover {
 }
 .profil_info {
     padding-top: 5%;
+    -webkit-transform:scale(1.05); /* Safari et Chrome */
+    -moz-transform:scale(1.05); /* Firefox */
+    -ms-transform:scale(1.05); /* Internet Explorer 9 */
+    -o-transform:scale(1.05); /* Opera */
+    transform:scale(1.05);
 }
+.profil_posts {
+    padding-top: 5%;
+    -webkit-transform:scale(1.05); /* Safari et Chrome */
+    -moz-transform:scale(1.05); /* Firefox */
+    -ms-transform:scale(1.05); /* Internet Explorer 9 */
+    -o-transform:scale(1.05); /* Opera */
+    transform:scale(1.05);
+}
+
+// Sidebar Admin 
+.sidebar {
+    width: 20%;
+    background-color: #0f1a34;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+}
+.divsidebar {
+    margin-right: 30%;
+    border-radius: 25px;
+    padding-left: 10%;
+}
+.buttons_admin {
+    border-radius: 25px;
+    width: 80%;
+    }
+tr {
+    border-radius: 25px;
+}
+ul {
+    list-style: none;
+    color: white;
+    text-decoration: none;
+}
+.li_admin_sidebar {
+    padding-top: 10%;
+}
+
+span {
+    color: white;
+}
+
+// NIGHTMODE
 .night {
     padding-right: 5%;
     padding-top: 1%;
@@ -359,60 +463,58 @@ button:hover {
 }
 .nightmode {
     background: #16181c;
+    transition: 0s !important; 
 }
-//menu deroulant
-  #menu-accordeon {
-    padding:0;
-    margin:0;
-    list-style:none;
-    text-align: center;
-    width: 180px;
-  }
- 
-  #menu-accordeon ul {
-    padding:0;
-    margin:0;
-    list-style:none;
-    text-align: center;
-  }
-  #menu-accordeon li {
-     border-radius: 6px;
-     margin-bottom:2px;
-  }
-  #menu-accordeon li li {
-     max-height:0;
-     overflow: hidden;
-     transition: all .5s;
-     border-radius:0;
-     background: white;
-     box-shadow: none;
-     border:none;
-     margin:0
-  }
-  #menu-accordeon a {
-    display:block;
-    text-decoration: none;
-    padding: 8px 0;
-    font-family: verdana;
-    font-size:1.2em
-  }
-  #menu-accordeon ul li a, #menu-accordeon li:hover li a {
-    font-size:1em;
-    border:solid 1px #333A40;
-  }
-  #menu-accordeon li:hover {
-     background: #729EBF;
-     border:solid 1px #333A40;
-     
-  }
-  #menu-accordeon li li:hover {
-     background: #999;
-     border:solid 1px #333A40;
-  }
-  #menu-accordeon ul li:last-child {
-     border-radius: 0 0 6px 6px;
-     border:none;
-  }
-  #menu-accordeon li:hover li {
-    max-height: 15em;
-  }
+// Formulaire 
+label {
+    padding-right: 5%;
+}
+.testform {
+    margin-bottom: 5%;
+    padding-bottom: 5%;
+}
+textarea {
+    width: 60%;
+    padding-bottom: 10%;
+    border-radius: 10px;
+    border: solid 3px #16181c;
+}
+
+
+// RESPONSIVE///////////////
+// for mobile//
+  
+@media screen and (max-width: 1100px) {
+    .layout_left {
+        display: none;
+    }
+    .layout_right {
+        display: none;
+    }
+    .main_div {
+        width: 100%;
+        margin-left: 0;
+    }
+    .imageposts{
+        width: 120px;
+        height: 120px;
+    }
+    .autoplay {
+        width:auto;
+        height: 100%;
+    }
+    header {
+        display: inline;
+    }
+    .sub_menu {
+        display: flex;
+        width: 53%;
+        justify-content: space-between;
+    }
+    .menu_main {
+        margin: 10% 10% 10% 10%;
+        width: auto;
+        padding-left: 25%;
+        display: block;
+    }
+}

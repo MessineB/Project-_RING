@@ -7,16 +7,26 @@ const form = document.getElementsByClassName("formpost")
 const menu = document.getElementsByClassName("menu_main")
 const footer = document.getElementsByTagName("footer")
 const imagebtn = document.getElementsByName("imagebtn")
+const comments = document.getElementsByClassName("comment_user")
 
 const btnnight = document.getElementById("btnnight")
 
 if ( localStorage.getItem("nightmode")) {
-    for (let i = 0 ; i < posts.length ; i++ ) {
-        if (posts[i].classList.contains("nightmode")) {
-            posts[i].classList.remove("nightmode");
+    for (let i = 0 ; i < comments.length ; i++ ) {
+        if (comments[i].classList.contains("nightmode")) {
+            comments[i].classList.remove("nightmode")
         } 
         else {
-            posts[i].classList.add("nightmode");
+            comments[i].classList.add("nightmode")
+        }
+    }
+
+    for (let i = 0 ; i < posts.length ; i++ ) {
+        if (posts[i].classList.contains("nightmode")) {
+            posts[i].classList.remove("nightmode")
+        } 
+        else {
+            posts[i].classList.add("nightmode")
         }
     }
     for (let i = 0 ; i < bigmain.length ; i++ ) {
@@ -88,7 +98,16 @@ btnnight.addEventListener("click" , verificationnightmode)
 
 
 function verificationnightmode() {
-    if ( localStorage.getItem("nightmode")) {   
+    if ( localStorage.getItem("nightmode")) {
+        for (let i = 0 ; i < comments.length ; i++ ) {
+            if (comments[i].classList.contains("nightmode")) {
+                comments[i].classList.remove("nightmode");
+            } 
+            else {
+                comments[i].classList.add("nightmode");
+            }
+        }
+        
         for (let i = 0 ; i < posts.length ; i++ ) {
             if (posts[i].classList.contains("nightmode")) {
                 posts[i].classList.remove("nightmode");
@@ -148,6 +167,14 @@ function verificationnightmode() {
         }
     }else 
     {
+        for (let i = 0 ; i < comments.length ; i++ ) {
+            if (comments[i].classList.contains("nightmode")) {
+                comments[i].classList.remove("nightmode");
+            } 
+            else {
+                comments[i].classList.add("nightmode");
+            }
+        }
         for (let i = 0 ; i < posts.length ; i++ ) {
             if (posts[i].classList.contains("nightmode")) {
                 posts[i].classList.remove("nightmode");
@@ -226,3 +253,27 @@ function nightmode() {
         localStorage.removeItem("nightmode")
     }
 }
+var inputuser = ""
+var easteregg = "1"
+console.log("Du brouillon a la suppression d'un mec normal mais avant la reussite en passant par la publication d'un VIP ( verified important person) vous ouvrira la porte du chemin dorée")
+document.addEventListener('keydown', function(event) {
+    // if(event.keyCode == 37) {
+    //     alert('Left was pressed');
+    // }
+    // else if(event.keyCode == 39) {
+    //     alert('Right was pressed');
+    // }
+    // else if(event.keyCode == 38) {
+    //     alert('Up was pressed');
+    // }
+    // else if(event.keyCode == 40) {
+    //     alert('Down was pressed');
+    // }
+    // 37 is left 39 right 40 down 38 up
+    inputuser += event.keyCode
+
+    if ( (inputuser.includes("403938383940")) && (easteregg == "1")) {
+        window.alert("Felicitation, vous avez trouvé le chemin doré ");
+        easteregg = "2"
+    }
+});

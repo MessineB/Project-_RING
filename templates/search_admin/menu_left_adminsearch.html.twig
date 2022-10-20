@@ -1,0 +1,49 @@
+<nav class="sidebar dark_sidebar text-white">
+    <ul id="sidebar_menu" class="metismenu">
+        <li class="li_admin_sidebar">
+            <div class="nav_title">
+                <h2 class="has-arrow" href="#" aria-expanded="false"><span> <i class="fa-sharp fa-solid fa-gauge"></i> Dashboard </span></h2>
+            </div>
+        </li>
+        <li class="li_admin_sidebar">
+            <div class="nav_title divsidebar">
+                <a href="{{path('app_home')}}" aria-expanded="false">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Accueil</span>
+                </a>
+            </div>
+        </li>
+        <li class="li_admin_sidebar">
+            <div class="nav_title divsidebar">
+                <a href="{{path('app_profil',{'id': app.user.id})}}" aria-expanded="false">
+                    <i class="fa-regular fa-address-card"></i>
+                    <span>Profil</span>
+                </a>
+            </div>
+        </li>
+        <li class="li_admin_sidebar">
+            <form action="{{path('app_search_admin')}}">
+                <label for="adminsearch">Rechercher un article</label>
+                <input class="search-form" type="text" name="search" id="adminsearch" placeholder="Search">
+            </form>
+        </li> 
+        <li class="li_admin_sidebar">
+            <div class="nav_title divsidebar">
+                <a href="{{path('app_admin')}}" aria-expanded="false">
+                    <i class="fa-sharp fa-solid fa-gauge"></i>
+                    <span>Retourner au dashboard</span>
+                </a>
+            </div>
+        </li>
+        <li class="li_admin_sidebar">
+            <div class="nav_title divsidebar">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <a href="{{ path('app_logout') }}" aria-expanded="false">
+                <span>Se deconnecter</span>
+                </a>
+            </div>
+        </li>
+
+        
+    </ul>
+</nav>

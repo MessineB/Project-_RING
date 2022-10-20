@@ -20,19 +20,28 @@ class ProfilController extends AbstractController
         $iduser = $rq->get("id");
         // Je recupere les posts fait par l'utilisateur a qui la page profil appartient
         $myposts = $postrepo->findByUser($iduser);
-
+        $waitingposts= $postrepo->findByUserandPending($iduser);
         // Ajout d'une "vue" pour chaque visite d'un utilisateur sur un profil 
         $thisuser = $userrepo->findOneBy(["id" => $iduser]);
-        $nbrvue =($thisuser->getNbvue());
-        $thisuser->setNbvue($nbrvue + 1);
-        
-        // Je flush pour changer la base de donnée
-        $entityManager = $doctrine->getManager();
-        $entityManager->persist($thisuser);
-        $entityManager->flush();
+        if ( !$thisuser ) {
+            $this->addFlash(
+               'danger',
+               'Ce compte n\'existe pas ...'
+            );
+            return $this->redirectToRoute('app_home'); 
+        }
+        else {
+            $nbrvue =($thisuser->getNbvue());
+            $thisuser->setNbvue($nbrvue + 1);
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($thisuser);
+            // Je flush pour changer la base de donnée
+            $entityManager->flush();
+        } 
         return $this->render('profil/index.html.twig', [
             'controller_name' => 'ProfilController',
             'myposts' => $myposts,
+            'waitingposts' => $waitingposts,
             'thisuser' => $thisuser
         ]);
     }

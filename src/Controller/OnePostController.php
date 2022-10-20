@@ -33,6 +33,10 @@ class OnePostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
             {   
+                if (!$user) {
+                    $this->addFlash('danger','Vous ne pouvez pas ecrire de commentaire sans etre connecté !');
+                    return $this->redirectToRoute('app_login');
+                }
                 $comment->setUser($user);
                 $comment->setCreated(new DateTime());
                
@@ -52,4 +56,30 @@ class OnePostController extends AbstractController
             'comments' => $commentsactuel
         ]);
     }
+
+        //Refuser un post et le mettre en attente de suppression
+        #[Route('/comment/{idp}{idc}/hide', name: 'comment_hide')]
+        #[IsGranted("ROLE_ADMIN")]
+        public function Commentrefused(Request $rq, ManagerRegistry $doctrine, CommentRepository $commentrepo ) {
+            $idcomment = $rq->get("idc");
+            $commenttohide = $commentrepo->findBy(["id" => $idcomment]);
+            $commenttohide[0]->setstatus("hidden");
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($commenttohide);
+            $entityManager->flush();
+            //dd($posttovalidate);
+            return $this->redirectToRoute('app_admin');
+        }
+         //Refuser un post et le mettre en attente de suppression
+         #[Route('/comment/{idp}{idc}/delete', name: 'comment_delete')]
+         #[IsGranted("ROLE_ADMIN")]
+         public function Commentdelete(Request $rq, ManagerRegistry $doctrine, CommentRepository $commentrepo ) {
+            $idcomment = $rq->get("idc");
+            $commenttohide = $commentrepo->findBy(["id" => $idcomment]);
+            $entityManager = $doctrine->getManager();
+            $entityManager->delete($commenttohide);
+            $entityManager->flush();
+            //dd($posttovalidate);
+            return $this->redirectToRoute('app_admin');
+         }
 }

@@ -87,7 +87,23 @@ class PostRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-   
+    /*
+     * @return Livre[] Returns an array of Livre objects
+     */
+    
+    public function searchadmin($value)
+    {   //SELECT * FROM post as p WHERE p.title or WHERE p.content LIKE "%xxx%" ORDER BY p.created_at
+        return $this->createQueryBuilder('p')//le paramètre p représente la table post (comme un alias dans une requête SQL)
+            ->andwhere('p.content LIKE :val')
+            ->andWhere("p.currentState = 'pending'")
+            ->setParameter('val', "%$value%")
+            ->orderBy('p.created', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
    /**
     * @return Post[] Returns an object of Post objects
     */
@@ -134,7 +150,22 @@ class PostRepository extends ServiceEntityRepository
         ;
     }
     
-
+    /**
+    * @return Post[] Returns an array of posts by user
+    */
+    public function findByUserandPending($value): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user = :val')
+            ->andWhere("p.currentState = 'pending'")
+            ->setParameter('val', $value)
+            ->orderBy('p.created', 'DESC')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
 
    
 

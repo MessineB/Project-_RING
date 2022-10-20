@@ -7,7 +7,7 @@
     <div class="bigmain">
          {% include "_layout_left.html.twig" %}
         <div class="main_div">
-            <h1 class="text_center_posts"> Post actuel ! </h1>
+            <h1 class="text_center_posts"> Post actuel : </h1>
                 <div class="posts" id="{{ postactuel.id }}">
                     <p><strong> Public ciblé : </strong> {{ postactuel.public}}</p>
                     <div class="text">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="posts">
-                     <h2 class="text_center_posts"> Espace commentaire ! </h2>
+                     <h2 class="text_center_posts"> Espace commentaire : </h2>
                     {{ form_start(CommentType) }}
                         {{ form_row(CommentType.content) }}
                     {{ form_end(CommentType)}}
@@ -30,9 +30,15 @@
             <div class="espace_commentaire">
                 {% for comment in comments %}
                     <div class="comment_user">
+                    <div>
+                            {% if is_granted("ROLE_ADMIN") %}
+                                <a href="{{path('comment_hide',{ "idc": comment.id, "idp": comment.post.id})}}"><i class="fa-solid fa-eye-slash"></i></a>
+                                <a href="{{path('comment_delete',{ "idc": comment.id, "idp": comment.post.id})}}"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                            {% endif %}
+                        </div>
                         <p> {{ comment.content }} </p>
                         <div class="bigmain commentaire">
-                            <p>Ecrit le : {{comment.created|format_datetime(locale='fr',pattern="dd MMMM YYYY")}} Par : <a href="{{path('app_profil',{'id': comment.user.id})}}">{{comment.user.name}}</a></p>
+                            <p>Ecrit le : {{comment.created|format_datetime(locale='fr',pattern="dd MMMM YYYY")}} par : <a href="{{path('app_profil',{'id': comment.user.id})}}">{{comment.user.name}}</a></p>
                         </div>
                     </div>
                 {% endfor %}

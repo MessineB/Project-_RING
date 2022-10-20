@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block title %}AdminSearch |Findaway{% endblock %}
+
+{% block body %}
+    {# {% include "header_admin.html.twig" %} #}
+    {% if is_granted("ROLE_ADMIN") %} 
+        {% include "search_admin/menu_left_adminsearch.html.twig" %}
+        <div id="main_div" class="admin_main_div">
+        {# Tableau #}
+        {# Les POSTS #}
+        <h1 class="texttocenter adminpost"> Les articles en pending !</h1>
+        {% if posts|length == 0 %}
+            <div class="posts adminpost">
+               <p class="adminpost"> Il n'y a pas de post a verifié ! </p>
+            </div>
+        {% else %} 
+            <div class="posts adminpost">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col">Public</th>
+                            <th scope="col">Content</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Verify</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %} 
+                            <tr>
+                            <th scope="row">{{ post.user.name }}</th>
+                            <td>{{ post.public }}</td>
+                            <td>{{ post.content }}</td>
+                            {% if post.image is not null %} 
+                                <td><img src="{{ image_post ~ post.image }}" alt="image du post" class="adminpostimage"></td>
+                            {% else %}
+                                <td><img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="adminpostimage"></td>
+                            {% endif %}
+                            <td> <a href="{{ path('post_pending',{'id': post.id}) }}">Valider </a></td>
+                            <td> <a href="{{ path('post_refused',{'id': post.id}) }}">Refuser</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    {% endif %}
+    
+    </div>
+    {% endif %}
+    
+{% endblock %}
+
+ 
+

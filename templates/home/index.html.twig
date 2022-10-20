@@ -27,12 +27,13 @@
                 <div class="post_contenu">
                 <div class="divimage">
                     <p> Public ciblé : <strong>{{ post.public}} </strong></p>
-                    {% if post.image is null %}
-                        <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts">
-                    {% else %}
-                        <a href="{{ image_post ~ post.image }}"> image </a>   
-                        <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts">
-                    {% endif %}
+                    <div>
+                        {% if post.image is null %}
+                            <a href="{{path('app_onepost',{'id': post.id})}}"><img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts"></a>
+                        {% else %}
+                            <a href="{{path('app_onepost',{'id': post.id})}}"> <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts"> </a>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="divtexte">
                     <div class="text">

@@ -27,5 +27,9 @@ class Latestsposts {
         $usertov = $this->userrepo->findByRole("ROLE_USER");
         return $usertov;
     }
+    public function Userverified() {
+        $usertov = $this->userrepo->findByRole("ROLE_VERIFIED_USER");
+        return $userv;
+    }
 
 }

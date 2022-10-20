@@ -8,18 +8,14 @@
     <div class="bigmain"> 
 	    {% include "_layout_left.html.twig" %}
         <div class="main_div">
-            <h2 class="text-center"> Voici les posts que vous avez cherché :</h2>     
-            {# {% if app.user %}
-            <div class="formpost">
-                <h3 class="text-center"> Vous voulez vous exprimez ?</h3>
-                {{ form_start(PostType) }}
-                    {{ form_row(PostType.image) }}
-                    {{ form_row(PostType.public) }}
-                    {{ form_row(PostType.content) }}
-                    {{ form_row(PostType.submit) }}
-                {{ form_end(PostType) }}
-            </div>
-            {% endif %} #}
+            <div class="text_center_posts">
+                <h2 class="text-center"> Voici les posts que vous avez cherché :</h2> 
+            </div>    
+            {% if posts|length == 0 %}
+                <div class="posts">
+                    <p> Hmm il semblerait qu'aucun article ne corresponde à votre recherche ...</p>
+                </div>
+            {% endif %}
             {% for post in posts %}  
             <div class="posts" id="{{ post.id }}">
                 <h3 class="text_center_posts"><a href="{{path('app_profil',{'id': post.user.id})}}">{{post.user.name}}</a></h3>
@@ -49,4 +45,5 @@
     </div> 
 {% include "_layout_right.html.twig" %}
 </div>
+{% include "footer.html.twig" %}
 {% endblock %}

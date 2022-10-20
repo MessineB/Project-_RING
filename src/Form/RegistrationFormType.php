@@ -25,21 +25,37 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez entrez un nom.',
                     ])
-                ]
+                    ],
+                'attr' => array(
+                    'placeholder' => 'Entrez votre nom',
+                )
             ])
             ->add('email' , EmailType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrez une adresse email valide.',
                     ])
-                ]
+                    ],
+                'attr' => array(
+                    'placeholder' => 'Entrez votre adresse mail'
+                ),
             ]) 
+            ->add('bio' , TextType::class, [
+                'label' => 'Description',
+                'attr' => array(
+                    'placeholder' => 'Parlez nous de vous'
+                ),
+                'required' => false,
+                
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Image',
-                'required' => false
+                'required' => false,
+                
             ] )
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'Accepter les conditions d\'utilisation',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Veuillez acceptez les conditions.',
@@ -58,11 +74,13 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit avoir au minimum 6 caracteres.',
-                        // max length allowed by Symfony for security reasons
                         'max' => 30,
                         'maxMessage' => 'Votre mot de passe est trop long.'
                     ]),
                 ],
+                'attr' => array(
+                    'placeholder' => 'Entrez un mot de passe securisé'
+                ),
             ])
         ;
     }

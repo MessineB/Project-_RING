@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,13 +18,18 @@ class PostType extends AbstractType
     {
         $builder
             ->add('image', FileType::class, [
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'class' => "testform"
+                ),
             ] )
             ->add('public' , TextType::class , [
                 'required' => true,
                 'label' => '',
                 'attr' => array(
-                    'placeholder' => 'Public ciblé')
+                    'placeholder' => 'Public ciblé',
+                    'class' => "testform"),
+                
             ])
             ->add('content' , TextareaType::class, [
                 'required' => true,

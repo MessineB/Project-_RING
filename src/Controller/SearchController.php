@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\HashtagRepository;
 use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +14,8 @@ class SearchController extends AbstractController
     public function index(Request $rq, PostRepository $pr): Response
     {
         $word = $rq->get("search");
-
-        $posts= $pr->search($word);
+        $posts= $pr->search($word);     
+        // dd($posts);
         return $this->render('search/index.html.twig', [
             'posts' => $posts,
         ]);

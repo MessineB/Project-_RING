@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+    {{ encore_entry_script_tags('profil') }}
+ {% endblock %}
 {% block title %}Profil de {{ thisuser.name}} |Findaway{% endblock %}
-
 {% block body %}
     {% include "header.html.twig" %}
     <div class="bigmain">
@@ -9,58 +10,100 @@
             <div class="posts">
                 <h1 class="profil_layout_left">Profil</h1>
                 <h3>Bienvenue sur le profil de : {{ thisuser.name}} </h3>
-                <div class="bigmain">
-                    <div class="profil_img_div">
-                        {% if thisuser.image is not null %}
-                            <img src="{{ profile_image ~ thisuser.image }}" alt="image du post" class="user-img-40">
-                        {% else %}
-                            <img src="{{ profile_standard ~ "user_blank.png" }}" alt="image du post" class="user-img-40">
-                        {% endif %}
-                    </div>
-                    <div class="profil_info">
-                        <h3><u>{{thisuser.name}}</u></h3>
-                        <p>Adresse mail : <strong>{{thisuser.email }}</strong></p>
-                    </div>
-            </div>
-            <div>
-                <p>Nombre de vue du profil : <strong> {{thisuser.nbvue}}</strong> </p>
-                <p>Nombre de post publiée : <strong>{{thisuser.posts|length}}</strong> </p>
-                <p>Nombre de commentaire publiée : <strong>{{thisuser.comments|length}}</strong> </p>
-            </div>
-        </div>
-            <div class="posts">
-                 {% if thisuser == app.user %}
-                    <h3><strong><u>Les articles que vous avez ecrit  </u></strong></h3>
-                 {% else %}
-                    <h3><strong><u>Les articles ecrit par {{thisuser.name}} </u></strong></h3>
-                 {% endif %}
-            </div>
-            {% for mypost in myposts %}  
-                <div class="posts" id="{{ mypost.id }}">
-                    <h3 class="text_center_posts">{{mypost.user.name}}</h3>
-                    <div class="post_contenu">
-                        <div class="divimage">
-                            <h3> Public ciblé : {{ mypost.public}}</h3>
-                            {% if mypost.image is null %}
-                                <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts profil_img">
-                                {% else %}
-                                <img src="{{ image_post ~ mypost.image }}" alt="image du post" class="imageposts profil_img">
+                {# Affichage des posts sur le profil si le profil appartient a l'utilisateur #}
+                <div class="profil_posts profil_hidden">
+                {% if (thisuser == app.user) or (is_granted("ROLE_ADMIN")) %}
+                    {% if waitingposts|length == 0 %}
+                            <div class="posts ">
+                                <p> Il n'y a pas de post en attente ! </p>
+                            </div>
+                        {% else %} 
+                            <div>
+                                <table class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th scope="col">User</th>
+                                            <th scope="col">Public</th>
+                                            <th scope="col">Content</th>
+                                            <th scope="col">Image</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for waitingpost in waitingposts %} 
+                                            <tr>
+                                            <th scope="row">{{ app.user.name }}</th>
+                                            <td>{{ waitingpost.public }}</td>
+                                            <td>{{ waitingpost.content }}</td>
+                                            {% if waitingpost.image is not null %} 
+                                                <td><img src="{{ image_post ~ waitingpost.image }}" alt="image du post" class="adminpostimage"></td>
+                                            {% else %}
+                                                <td><img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="adminpostimage"></td>
+                                            {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </div>
+                    {% endif %}
+                {% endif %}    
+                </div>
+                <div class="profil_info">
+                    <div class="bigmain">
+                        <div class="profil_img_div">
+                            {% if thisuser.image is not null %}
+                                <img src="{{ profile_image ~ thisuser.image }}" alt="image du post" class="user-img-40">
+                            {% else %}
+                                <img src="{{ profile_standard ~ "user_blank.png" }}" alt="image du post" class="user-img-40">
                             {% endif %}
                         </div>
-                        <div class="divtexte profil_text">
-                            <div class="text">
-                                {% if mypost.content|length > 20 %}
-                                    {# <p> Ce post est long </p> #}
-                                {% endif %}
-                                <p>{{ mypost.content }} </p>
-                            </div>
-                            <div class="linktopost">
-                                <a class="link_post" href="{{path('app_onepost',{'id': mypost.id})}}">Lire la suite</a>
-                            </div>
+                        <div class="profil_info">
+                            <h3><u>{{thisuser.name}}</u></h3>
+                            <p>Adresse mail : <strong>{{thisuser.email }}</strong></p>
+                        </div>
+                    </div>
+                    <div class="testform">
+                        <p>Nombre de vue du profil : <strong> {{thisuser.nbvue}}</strong> </p>
+                        <p>Nombre de post publiée : <strong>{{thisuser.posts|length}}</strong> </p>
+                        <p>Nombre de commentaire publiée : <strong>{{thisuser.comments|length}}</strong> </p>
+                    </div>
+                </div>
+        {% if (app.user == thisuser) or (is_granted("ROLE_ADMIN")) %}
+            <button id="profil_swaptopostpending">Voir les Posts que vous avez en attente.</button>
+        {% endif %}
+        </div>
+        <div class="posts">
+            {% if thisuser == app.user %}
+                <h3><strong><u>Les articles que vous avez ecrit  </u></strong></h3>
+            {% else %}
+                <h3><strong><u>Les articles ecrit par {{thisuser.name}} </u></strong></h3>
+            {% endif %}
+        </div>
+        {% for mypost in myposts %}  
+            <div class="posts" id="{{ mypost.id }}">
+                <h3 class="text_center_posts">{{mypost.user.name}}</h3>
+                <div class="post_contenu">
+                    <div class="divimage">
+                        <h3> Public ciblé : {{ mypost.public}}</h3>
+                        {% if mypost.image is null %}
+                            <img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts profil_img">
+                        {% else %}
+                            <img src="{{ image_post ~ mypost.image }}" alt="image du post" class="imageposts profil_img">
+                        {% endif %}
+                    </div>
+                    <div class="divtexte profil_text">
+                        <div class="text">
+                            {% if mypost.content|length > 20 %}
+                                {# <p> Ce post est long </p> #}
+                            {% endif %}
+                            <p>{{ mypost.content }} </p>
+                        </div>
+                        <div class="linktopost">
+                            <a class="link_post" href="{{path('app_onepost',{'id': mypost.id})}}">Lire la suite</a>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
         </div> 
     {% include "_layout_right.html.twig" %}
     </div>

@@ -8,9 +8,9 @@
         {% else %}
             <a href="{{path('app_profil',{'id': app.user.id})}}"><img src="{{ profile_standard ~ "user_blank.png" }}" alt="image du post" class="user-img-40"></a>
         {% endif %}
-        <p>Nombre de vue du profil : <strong> {{app.user.nbvue}}</strong> </p>
-        <p>Nombre de post publiée : <strong>{{app.user.posts|length}}</strong> </p>
-        <p>Nombre de commentaire publiée : <strong>{{app.user.comments|length}}</strong> </p>
+        <p>Nombre de vues du profil : <strong> {{app.user.nbvue}}</strong> </p>
+        <p>Nombre de posts publiées : <strong>{{app.user.posts|length}}</strong> </p>
+        <p>Nombre de commentaires publiés : <strong>{{app.user.comments|length}}</strong> </p>
     {% else %}
         <h3 class="text_left">Vous pouvez participer en dessous ! </h3>
         <p> Cliquez <a href="{{path('app_register')}}">  ici  </a> pour créer un compte !</p>
