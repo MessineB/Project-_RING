@@ -15,7 +15,7 @@
                 {% if (thisuser == app.user) or (is_granted("ROLE_ADMIN")) %}
                     {% if waitingposts|length == 0 %}
                             <div class="posts ">
-                                <p> Il n'y a pas de post en attente ! </p>
+                                <p> Vous n'avez pas de post en attente !</p>
                             </div>
                         {% else %} 
                             <div>
@@ -59,6 +59,10 @@
                         <div class="profil_info">
                             <h3><u>{{thisuser.name}}</u></h3>
                             <p>Adresse mail : <strong>{{thisuser.email }}</strong></p>
+                            <div class="profil_bio">
+                                <h3><u>Bio</u></h3>
+                                <p>{{thisuser.bio }}</p>
+                            </div>
                         </div>
                     </div>
                     <div class="testform">
@@ -68,12 +72,12 @@
                     </div>
                 </div>
         {% if (app.user == thisuser) or (is_granted("ROLE_ADMIN")) %}
-            <button id="profil_swaptopostpending">Voir les Posts que vous avez en attente.</button>
+            <button id="profil_swaptopostpending">Voir les Posts que vous avez en attente</button>
         {% endif %}
         </div>
         <div class="posts">
             {% if thisuser == app.user %}
-                <h3><strong><u>Les articles que vous avez ecrit  </u></strong></h3>
+                <h3><strong><u>Les articles que vous avez ecrit</u></strong></h3>
             {% else %}
                 <h3><strong><u>Les articles ecrit par {{thisuser.name}} </u></strong></h3>
             {% endif %}
@@ -92,9 +96,6 @@
                     </div>
                     <div class="divtexte profil_text">
                         <div class="text">
-                            {% if mypost.content|length > 20 %}
-                                {# <p> Ce post est long </p> #}
-                            {% endif %}
                             <p>{{ mypost.content }} </p>
                         </div>
                         <div class="linktopost">

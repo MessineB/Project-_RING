@@ -13,11 +13,11 @@
         {# Les POSTS #}
         <h1 class="texttocenter adminpost"> Les articles en pending !</h1>
         {% if posts|length == 0 %}
-            <div class="posts adminpost">
+            <div class="adminposts adminpost">
                <p class="adminpost"> Il n'y a pas de post a verifié ! </p>
             </div>
         {% else %} 
-            <div class="posts adminpost">
+            <div class="adminposts adminpost">
                 <table class="table table-striped">
                     <thead class="table-dark">
                         <tr>
@@ -51,11 +51,11 @@
     {# Les USERS #}
         <h1 class="texttocenter adminuser"> Les users !</h1>
         {% if users|length == 0 %}
-            <div class="posts adminuser">
+            <div class="adminposts adminuser">
                <p class="adminuser"> Il n'y a pas d'user a verifié ! </p>
             </div>
         {% else %}
-            <div class="adminuser posts">
+            <div class="adminuser adminposts">
                 <table class="table table-striped ">
                     <thead class="table-dark rounded-top">
                         <tr>
@@ -87,11 +87,11 @@
         {# Les POSTS a supprimer #}
         <h1 class="texttocenter adminposttodelete"> Les posts a supprimer !</h1>
         {% if poststodelete|length == 0 %}
-            <div class="posts adminposttodelete">
+            <div class="adminposts adminposttodelete">
                <p class="adminposttodelete"> Il n'y a pas de Post a supprimer ! </p>
             </div>
         {% else %}
-        <div class="posts adminposttodelete">
+        <div class="adminposts adminposttodelete">
             <table class="table table-striped rounded-top">
                 <thead class="table-dark">
                     <tr>

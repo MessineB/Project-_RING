@@ -6,8 +6,8 @@
                     <a class="menu_link" href="{{path('app_admin')}}"><i class="fa-solid fa-lock fs-1"></i>({{latestposts.PendingPosts|length}})</a>
                 {% endif %}
                 {% if app.user is null %}
-                    <a class="menu_link" href="{{path('app_login')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user fs-1"> </i> Login</a>
-                    <a class="menu_link" href="{{path('app_register')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user-plus fs-1"> </i> Register</a>
+                    <a class="menu_link" href="{{path('app_login')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user fs-1"> </i> Connection</a>
+                    <a class="menu_link" href="{{path('app_register')}}" class="linkLogout"><i class="fa-sharp fa-solid fa-user-plus fs-1"> </i> Inscription</a>
                 {% endif %}
                 {% if app.user %}
                     <a class="menu_link" href="{{path('app_profil',{'id': app.user.id})}}"><i class="fa-regular fa-address-card fs-1"></i> </a>

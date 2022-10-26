@@ -13,9 +13,8 @@ class SearchController extends AbstractController
     #[Route('/recherche', name: 'app_search')]
     public function index(Request $rq, PostRepository $pr): Response
     {
-        $word = $rq->get("search");
+        $word = $rq->query->get('search');
         $posts= $pr->search($word);     
-        // dd($posts);
         return $this->render('search/index.html.twig', [
             'posts' => $posts,
         ]);

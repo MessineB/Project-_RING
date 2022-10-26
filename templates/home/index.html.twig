@@ -12,7 +12,7 @@
         <div class="main_div">      
             {% if app.user %}
             <div class="formpost">
-                <h3 class="texttocenter"> Vous voulez vous exprimez ?</h3>
+                <h3 class="texttocenter"> Vous voulez vous exprimer ?</h3>
                 {{ form_start(PostType) }}
                     {{ form_row(PostType.image) }}
                     {{ form_row(PostType.public) }}
@@ -25,16 +25,16 @@
             <div class="posts" id="{{ post.id }}">
                 <h3 class="text_center_posts"><a href="{{path('app_profil',{'id': post.user.id})}}">{{post.user.name}}</a></h3>
                 <div class="post_contenu">
-                <div class="divimage">
-                    <p> Public ciblé : <strong>{{ post.public}} </strong></p>
-                    <div>
-                        {% if post.image is null %}
-                            <a href="{{path('app_onepost',{'id': post.id})}}"><img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts"></a>
-                        {% else %}
-                            <a href="{{path('app_onepost',{'id': post.id})}}"> <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts"> </a>
-                        {% endif %}
+                    <div class="divimage">
+                        <p> Public ciblé : <strong>{{ post.public}} </strong></p>
+                        <div>
+                            {% if post.image is null %}
+                                <a href="{{path('app_onepost',{'id': post.id})}}"><img src="{{ exemple_post ~ "post_standard.png" }}" alt="image du post" class="imageposts"></a>
+                            {% else %}
+                                <a href="{{path('app_onepost',{'id': post.id})}}"> <img src="{{ image_post ~ post.image }}" alt="image du post" class="imageposts"> </a>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
                 <div class="divtexte">
                     <div class="text">
                             {% set test = post.content|split('', 150) %}
@@ -51,5 +51,5 @@
     </div> 
 {% include "_layout_right.html.twig" %}
 </div>
- {% include "footer.html.twig" %}
+{% include "footer.html.twig" %}
 {% endblock %}

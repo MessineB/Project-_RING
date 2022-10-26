@@ -116,7 +116,7 @@ body {
 
 
 .user-img-40 {
-    height: 200px;
+    height: 300px;
     width: 60%;
     border-radius: 25px;
     margin: 5% 5%;
@@ -171,13 +171,18 @@ body {
     transform:scale(1.05);
 }
 .profil_visible {
-    display: inline;
-    
+    display: inline;  
 }
+.profil_bio {
+    width: 87%;
+    padding-left: 14%;
+}
+
 
 .divtexte {
     display: grid;
-    width: 175px;
+    width: 50%;
+    padding-left: 5%;
 }
 input {
     border-radius: 10px;
@@ -231,6 +236,9 @@ button:hover {
 .modal-title {
     margin-left: 18%;
 }
+.modal {
+    --bs-modal-width: 700px;
+}
 //
 .formpost {
     border-radius: 25px;
@@ -257,7 +265,7 @@ button:hover {
 .posts {
     background-color: white;
     box-shadow: 12px 12px 2px 1px rgba(59, 59, 61, 0.2);
-    margin: 0% 8% 5%;
+    margin: 0% 4% 5%;
     border-radius: 25px;
     -webkit-transition: all 1s ease; /* Safari et Chrome */
     -moz-transition: all 1s ease; /* Firefox */
@@ -398,7 +406,7 @@ button:hover {
     width: 300px;
 }
 .profil_img_div {
-    width: 60%;
+    width: 50%;
 }
 .profil_text {
     width: 100%;
@@ -429,7 +437,6 @@ button:hover {
     bottom: 0;
 }
 .divsidebar {
-    margin-right: 30%;
     border-radius: 25px;
     padding-left: 10%;
 }
@@ -437,6 +444,7 @@ button:hover {
     border-radius: 25px;
     width: 80%;
     }
+
 tr {
     border-radius: 25px;
 }
@@ -452,7 +460,17 @@ ul {
 span {
     color: white;
 }
-
+.adminposts {
+    background-color: white;
+    box-shadow: 12px 12px 2px 1px rgba(59, 59, 61, 0.2);
+    margin: 0% 4% 5%;
+    border-radius: 25px;
+    -webkit-transition: all 1s ease; /* Safari et Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* Internet Explorer 9 */
+    -o-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
 // NIGHTMODE
 .night {
     padding-right: 5%;
@@ -516,5 +534,20 @@ textarea {
         width: auto;
         padding-left: 25%;
         display: block;
+    }
+    .user-img-40 {
+        height: 170px;
+        width: auto;
+    }
+    .sidebar {
+        position: relative;
+        width: auto;
+    }
+    .admin_main_div{
+        width: auto;
+        margin: 0;
+    }
+    .adminposts {
+        margin:0%;
     }
 }

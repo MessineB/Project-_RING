@@ -32,8 +32,12 @@
                     <div class="comment_user">
                     <div>
                             {% if is_granted("ROLE_ADMIN") %}
-                                <a href="{{path('comment_hide',{ "idc": comment.id, "idp": comment.post.id})}}"><i class="fa-solid fa-eye-slash"></i></a>
-                                <a href="{{path('comment_delete',{ "idc": comment.id, "idp": comment.post.id})}}"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                                {% if comment.status == "upload" %}
+                                    <a href="{{path('comment_hide',{ "idc": comment.id})}}"><i class="fa-solid fa-eye-slash"></i>Cacher</a>
+                                {% else %}
+                                    <a href="{{path('comment_show',{ "idc": comment.id})}}"><i class="fa-solid fa-eye"></i>Afficher</a>
+                                {% endif %}
+                                <a href="{{path('comment_delete',{ "idc": comment.id})}}"><i class="fa-sharp fa-solid fa-trash"></i>Supprimer</a>
                             {% endif %}
                         </div>
                         <p> {{ comment.content }} </p>

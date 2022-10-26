@@ -40,6 +40,7 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => 'Entrez votre adresse mail'
                 ),
             ]) 
+            
             ->add('bio' , TextType::class, [
                 'label' => 'Description',
                 'attr' => array(

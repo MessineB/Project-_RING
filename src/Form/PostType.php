@@ -25,7 +25,7 @@ class PostType extends AbstractType
             ] )
             ->add('public' , TextType::class , [
                 'required' => true,
-                'label' => '',
+                'label' => 'Public ciblé',
                 'attr' => array(
                     'placeholder' => 'Public ciblé',
                     'class' => "testform"),
@@ -33,6 +33,7 @@ class PostType extends AbstractType
             ])
             ->add('content' , TextareaType::class, [
                 'required' => true,
+                'label' => "Contenu",
                 'attr' => array(
                     'placeholder' => 'Ecrire votre article')
             ])

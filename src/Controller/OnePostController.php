@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Post;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\PostRepository;
@@ -21,16 +22,21 @@ class OnePostController extends AbstractController
     {   // Je recupere l'id du post 
         $idpost = $rq->get("id");
 
-        // Grace a l'idée recupéré je recupere le post que je veux afficher !
+        // Grace a l'idée recupéré je recupere le post que je veux afficher 
         $postsactuel = $postrepo->findOneBy(["id" => $idpost]);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $commentsactuel = $commentrepo->findAllByPostId($idpost);
+        }
+        else {
+            $commentsactuel= $commentrepo->findByPostId($idpost);
+        }
         // Je commence le processus pour créer un nouveau commentaire
-        $commentsactuel= $commentrepo->findByPostId($idpost);
-    
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($rq);
         $user = $this->getUser();
 
+        // Lorsque le formulaire est submit et valider
         if ($form->isSubmitted() && $form->isValid())
             {   
                 if (!$user) {
@@ -47,7 +53,7 @@ class OnePostController extends AbstractController
                 $entityManager->persist($comment);
                 $entityManager->flush();
                 $this->addFlash('success','Votre commentaire a eté crée avec succes !');
-                return $this->render('one_post/index.html.twig', ['postactuel' => $postsactuel , 'CommentType' => $form->createView() , 'comments' => $commentsactuel] );
+                return $this->redirectToRoute('app_onepost', ['id' => $idpost] );
             }
         return $this->render('one_post/index.html.twig', [
             'controller_name' => 'OnePostController',
@@ -57,29 +63,46 @@ class OnePostController extends AbstractController
         ]);
     }
 
-        //Refuser un post et le mettre en attente de suppression
-        #[Route('/comment/{idp}{idc}/hide', name: 'comment_hide')]
+        //Caché un commentaire
+        #[Route('/comment/{idc}/hide', name: 'comment_hide')]
         #[IsGranted("ROLE_ADMIN")]
-        public function Commentrefused(Request $rq, ManagerRegistry $doctrine, CommentRepository $commentrepo ) {
+        public function Commenterhide(Request $rq, ManagerRegistry $doctrine, CommentRepository $commentrepo ) {
             $idcomment = $rq->get("idc");
-            $commenttohide = $commentrepo->findBy(["id" => $idcomment]);
-            $commenttohide[0]->setstatus("hidden");
+            $commenttohide = $commentrepo->findById($idcomment);
+            $idpost = $commenttohide->getPost()->getId();
+            $commenttohide->setstatus("hidden");
             $entityManager = $doctrine->getManager();
             $entityManager->persist($commenttohide);
             $entityManager->flush();
-            //dd($posttovalidate);
-            return $this->redirectToRoute('app_admin');
+            $this->addFlash('success','Ce commentaire a ete caché avec succes !');
+            return $this->redirectToRoute('app_onepost', ['id' => $idpost]);
         }
-         //Refuser un post et le mettre en attente de suppression
-         #[Route('/comment/{idp}{idc}/delete', name: 'comment_delete')]
+
+        //Affiché un commentaire qui etait caché
+        #[Route('/comment/{idc}/show', name: 'comment_show')]
+        #[IsGranted("ROLE_ADMIN")]
+        public function Commentshow(Request $rq, ManagerRegistry $doctrine, CommentRepository $commentrepo ) {
+            $idcomment = $rq->get("idc");
+            $commenttohide = $commentrepo->findById($idcomment);
+            $idpost = $commenttohide->getPost()->getId();
+            $commenttohide->setstatus("upload");
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($commenttohide);
+            $entityManager->flush();
+            $this->addFlash('success','Ce commentaire est affiché de nouveau avec succes !');
+            return $this->redirectToRoute('app_onepost', ['id' => $idpost]);
+        }
+         //Supprimer un commentaire.
+         #[Route('/comment/{idc}/delete', name: 'comment_delete')]
          #[IsGranted("ROLE_ADMIN")]
          public function Commentdelete(Request $rq, ManagerRegistry $doctrine, CommentRepository $commentrepo ) {
             $idcomment = $rq->get("idc");
-            $commenttohide = $commentrepo->findBy(["id" => $idcomment]);
+            $commenttohide = $commentrepo->findById($idcomment);
+            $idpost = $commenttohide->getPost()->getId();
             $entityManager = $doctrine->getManager();
-            $entityManager->delete($commenttohide);
+            $entityManager->remove($commenttohide);
             $entityManager->flush();
-            //dd($posttovalidate);
-            return $this->redirectToRoute('app_admin');
+            $this->addFlash('sucess','Ce commentaire a ete supprimer avec succes !');
+            return $this->redirectToRoute('app_onepost', ['id' => $idpost]);
          }
 }
